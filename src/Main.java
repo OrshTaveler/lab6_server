@@ -1,14 +1,9 @@
 import commands.*;
 import controllers.MainLoop;
 import network.UDPNetwork;
-import utilities.FileManager;
-import utilities.HumanBeingDAO;
-import utilities.Serialization;
-import utilities.XML;
-
+import utilities.*;
 import java.io.IOException;
-import java.nio.channels.Selector;
-
+import java.sql.SQLException;
 import java.util.HashMap;
 
 
@@ -17,7 +12,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         HashMap<String, Command> commands = new HashMap<>();
-        HumanBeingDAO humanBeings = XML.XMLToHuman(FileManager.readCollection().toArray(new String[0]));
 
 
         commands.put("add", new Add());
@@ -30,10 +24,13 @@ public class Main {
         commands.put("remove_first", new RemoveFirst());
         commands.put("remove_any_by_weapon_type", new RemoveAnyByWeaponType());
         commands.put("filter_starts_with_name", new FilterStartsWithName());
-
-
+        commands.put("reg",new Register());
+        commands.put("auth",new Authorize());
+        commands.put("owner",new Owner());
 
         try {
+            SQL.makeConnection("jdbc:postgresql://localhost:5432/lab7","postgres","123");
+            HumanBeingDAO humanBeings = SQL.sqlToCollection();
             UDPNetwork test = new UDPNetwork(4555,"localhost");
             MainLoop mainLoop = new MainLoop(commands,test,humanBeings);
             System.out.println("Ждём подключения");
@@ -41,6 +38,8 @@ public class Main {
 
         } catch (IOException e){
                 System.out.println(e.getMessage());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 

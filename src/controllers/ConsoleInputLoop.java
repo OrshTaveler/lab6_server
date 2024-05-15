@@ -7,6 +7,8 @@ import utilities.HumanBeingDAO;
 import utilities.Serialization;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -30,7 +32,7 @@ public class ConsoleInputLoop  extends ControlLoop{
             String command_name = scanner.nextLine();
             try {
                 Command command = commands.get(command_name);
-                command.execute(null,null,humanBeings);
+                command.exec(null,null,humanBeings);
                 printIndication();
 
             } catch (NullPointerException e) {
@@ -39,6 +41,10 @@ public class ConsoleInputLoop  extends ControlLoop{
                     System.out.println("Введена не существующая команда. help чтобы узнать команды");
                 printIndication();
             } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
 

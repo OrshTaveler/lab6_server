@@ -42,7 +42,17 @@ public class HumanBeing {
         this.minutesOfWaiting = minutesOfWaiting;
         this.creationDate = creationDate;
     }
+    public HumanBeing(int id,String name,Coordinates coordinates,boolean realHero,Boolean hasToothpick,Long minutesOfWaiting,WeaponType weaponType,Car car){
+        this.car = car;
+        this.coordinates = coordinates;
+        this.id = id;
+        this.name = name;
+        this.realHero = realHero;
+        this.hasToothpick = hasToothpick;
+        this.weaponType = weaponType;
+        this.minutesOfWaiting = minutesOfWaiting;
 
+    }
 
     public int getId() {
         return id;
@@ -92,5 +102,9 @@ public class HumanBeing {
     }
 
     public boolean getRealHero(){return realHero;}
+
+    public void setId(int id){
+        this.id = id;
+    }
 
 }

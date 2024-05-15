@@ -7,6 +7,9 @@ import initials.WeaponType;
 import network.UDPNetwork;
 import org.json.simple.JSONObject;
 import utilities.HumanBeingDAO;
+import utilities.SQL;
+
+import java.sql.SQLException;
 
 public class Update extends Command {
     public Update(){
@@ -18,7 +21,8 @@ public class Update extends Command {
      * @return  Json
      * */
     @Override
-    public JSONObject execute(String atribute, JSONObject additionalData, HumanBeingDAO humanBeings) {
+    public JSONObject execute(String atribute, JSONObject additionalData, HumanBeingDAO humanBeings) throws SQLException {
+
         HumanBeing initialHumanBeing = humanBeings.getById(Integer.parseInt(atribute));
         int idpointer = initialHumanBeing.getId();
         int indx = humanBeings.getIndexById(idpointer);
