@@ -17,8 +17,11 @@ public class Owner extends Command implements Serializable {
 
     @Override
     protected JSONObject execute(String atribute, JSONObject additionalData, HumanBeingDAO humanBeings) throws IOException, SQLException, NoSuchAlgorithmException {
-        if (SQL.getOwnerById(Integer.parseInt(atribute)).equals(additionalData.get("login"))) {
+        String owner = SQL.getOwnerById(Integer.parseInt(atribute));
+        if (owner != null) {
+         if (owner.equals(additionalData.get("login"))) {
             return  UDPNetwork.generateResponse(true,new JSONObject(),null);
+         }
         }
         return  UDPNetwork.generateResponse(false,new JSONObject(),null);
 

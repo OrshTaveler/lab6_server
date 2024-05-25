@@ -37,13 +37,6 @@ public class MainTask implements Runnable{
             JSONObject commandJson =  udp.getPacket();
             if ((boolean) commandJson.get("initialConnect")){
                 udp.makeInitialConnect(Serialization.serializeWholeMap(commands));
-
-                HashMap<String, Command> server_commands = new HashMap<>();
-                server_commands.put("exit",new Exit());
-                server_commands.put("save",new Save());
-
-                ConsoleInputLoop consoleInputLoop = new ConsoleInputLoop(server_commands,humanBeings);
-                consoleInputLoop.start();
                 continue;
             }
 

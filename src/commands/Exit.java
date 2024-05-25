@@ -17,6 +17,6 @@ public class Exit extends Command{
     @Override
     public JSONObject execute(String atribute, JSONObject additionalData,HumanBeingDAO humanBeings) {
         System.exit(0);
-        return UDPNetwork.generateResponse(true,null,"Всё, отключились");
+        return UDPNetwork.generateResponse(true,new JSONObject(),"Всё, отключились");
     }
 }

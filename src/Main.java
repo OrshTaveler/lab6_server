@@ -5,6 +5,7 @@ import utilities.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 
 public class Main {
@@ -12,6 +13,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         HashMap<String, Command> commands = new HashMap<>();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("url:");
+        String url = scanner.nextLine();
+        System.out.print("user:");
+        String user = scanner.nextLine();
+        System.out.print("password:");
+        String password = scanner.nextLine();
 
 
         commands.put("add", new Add());
@@ -29,12 +38,13 @@ public class Main {
         commands.put("owner",new Owner());
 
         try {
-            SQL.makeConnection("jdbc:postgresql://localhost:5432/lab7","postgres","123");
+            SQL.makeConnection(url,user,password);
             HumanBeingDAO humanBeings = SQL.sqlToCollection();
             UDPNetwork test = new UDPNetwork(4555,"localhost");
             MainLoop mainLoop = new MainLoop(commands,test,humanBeings);
             System.out.println("Ждём подключения");
             mainLoop.start();
+
 
         } catch (IOException e){
                 System.out.println(e.getMessage());

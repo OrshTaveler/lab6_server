@@ -36,7 +36,12 @@ public abstract class Command implements Serializable {
          if (token.equals(UDPNetwork.generateLiveToken((String) additionalData.get("login"),(String) additionalData.get("password"),(Long) additionalData.get("timestamp")))| this.getName().equals("auth") | this.getName().equals("reg") ) { return execute(atribute,additionalData,humanBeings);}
          return new JSONObject();
     }
-
+    public JSONObject exec(String atribute, JSONObject additionalData, HumanBeingDAO humanBeings, boolean server) throws IOException, SQLException, NoSuchAlgorithmException{
+        if(server) {return execute(atribute,additionalData,humanBeings);}
+        String token = (String) additionalData.get("token");
+        if (token.equals(UDPNetwork.generateLiveToken((String) additionalData.get("login"),(String) additionalData.get("password"),(Long) additionalData.get("timestamp")))| this.getName().equals("auth") | this.getName().equals("reg") ) { return execute(atribute,additionalData,humanBeings);}
+        return new JSONObject();
+    }
 
 
 }

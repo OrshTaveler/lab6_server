@@ -32,7 +32,7 @@ public class ConsoleInputLoop  extends ControlLoop{
             String command_name = scanner.nextLine();
             try {
                 Command command = commands.get(command_name);
-                command.exec(null,null,humanBeings);
+                command.exec(null,new JSONObject(),humanBeings,true);
                 printIndication();
 
             } catch (NullPointerException e) {
@@ -40,11 +40,7 @@ public class ConsoleInputLoop  extends ControlLoop{
                 if (!command_name.isEmpty())
                     System.out.println("Введена не существующая команда. help чтобы узнать команды");
                 printIndication();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchAlgorithmException e) {
+            } catch (IOException | SQLException | NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
 

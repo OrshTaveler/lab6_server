@@ -46,6 +46,12 @@ public class MainLoop extends ControlLoop{
     }
     @Override
     public void run(){
+        HashMap<String, Command> server_commands = new HashMap<>();
+        server_commands.put("exit",new Exit());
+        server_commands.put("save",new Save());
+
+        ConsoleInputLoop consoleInputLoop = new ConsoleInputLoop(server_commands,humanBeings);
+        consoleInputLoop.start();
         for (int i = 0; i < 3; i++){
          executorService.submit(new MainTask((HashMap<String, Command>) commands,udp,humanBeings,i+1));
         }

@@ -50,6 +50,8 @@ public class SQL {
             return false;
         }
     }
+
+
     private static int getLastID() throws SQLException {
         var prepared = connection.prepareStatement("SELECT MAX(id) FROM humans");
         ResultSet resultSet = prepared.executeQuery();
@@ -77,10 +79,32 @@ public class SQL {
         return false;
     }
     }
+    public static boolean updateHuman(HumanBeing humanBeing,String owner){
+        try{
+            var prepared = connection.prepareStatement("INSERT INTO humans(name,x,y,realhero,hastoothpick,carname,minutesofwaiting,weapontype,owner) " + "VALUES (?,?,?,?,?,?,?,?,?)");
+            prepared.setString(1,humanBeing.getName());
+            prepared.setDouble(2,humanBeing.getCoordinates().getX());
+            prepared.setLong(3,humanBeing.getCoordinates().getY());
+            prepared.setBoolean(4,humanBeing.getRealHero());
+            prepared.setBoolean(5,humanBeing.getHasToothpick());
+            prepared.setString(6,humanBeing.getCar().getName());
+            prepared.setLong(7,humanBeing.getMinutesOfWaiting());
+            prepared.setString(8,humanBeing.getWeaponType().toString());
+            prepared.setString(9,owner);
+            prepared.execute();
+            return true;
+        }
+        catch (SQLException e){
+            return false;
+        }
+    }
+
     public static String getOwnerById(int id) throws SQLException {
+
         var prepared = connection.prepareStatement("SELECT owner FROM humans " + "WHERE (id = ?)");
         prepared.setInt(1,id);
         ResultSet resultSet = prepared.executeQuery();
+        if(!resultSet.isBeforeFirst()) return null;
         resultSet.next();
         return resultSet.getString(1);
     }

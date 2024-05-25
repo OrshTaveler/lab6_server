@@ -22,6 +22,6 @@ public class Save extends Command{
     public JSONObject execute(String atribute, JSONObject additionalData, HumanBeingDAO humanBeings) throws IOException {
         FileManager.save(XML.toXML(humanBeings));
         System.out.println("Сохранили успешно");
-        return UDPNetwork.generateResponse(true,null,"Сохранили успешно");
+        return UDPNetwork.generateResponse(true,new JSONObject(),"Сохранили успешно");
     }
 }
